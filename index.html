@@ -1,0 +1,68 @@
+<!-- 
+Create a basic HTML calculator with buttons for each digit, each of the above functions and an “Equals” key.
+
+
+-->
+
+<html>
+
+<style>
+
+</style>
+
+<body>
+
+
+
+
+</body>
+<script>
+    // TODO: BEFORE WE GET TOO DEEP ADD '_' TO INTERNAL REFERENCES FOR CLARITY.
+
+    // FOR TESTING
+    let _a = 3;
+    let _b = 2;
+
+    // OPERATIONS
+    function operate(op, a, b) {
+        switch (op) {
+            case '+':
+                return add(a, b);
+            case '-':
+                return sub(a, b);
+            case '*':
+                return mult(a, b);
+            case '/':
+                return divi(a, b);
+        }
+    }
+
+    function add(a, b) {
+        return a + b;
+    }
+
+    function sub(a, b) {
+        return a - b;
+    }
+
+    function mult(a, b) {
+        return a * b;
+    }
+
+    function divi(a, b) {
+        return a / b;
+    }
+
+    // // FOR TESTING
+    console.log(operate('+', _a, _b));
+    console.log(operate('-', _a, _b));
+    console.log(operate('*', _a, _b));
+    console.log(operate('/', _a, _b));
+
+    // console.log('add ' + add(a, b));
+    // console.log('subtract ' + sub(a, b));
+    // console.log('mult ' + mult(a, b));
+    // console.log('divide ' + divi(a, b));
+</script>
+
+</html>
