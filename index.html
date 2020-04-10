@@ -7,21 +7,82 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
 <html>
 
 <style>
+    .button-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
 
+    .center {
+        margin: auto;
+    }
+
+    .results-display {
+        border: 1px black solid;
+        text-align: right;
+    }
+
+    h2.color-text {
+        color: aliceblue;
+        padding-right: 1em;
+    }
+
+
+    .wrapper {
+        width: 40%;
+        background-color: darkolivegreen;
+    }
 </style>
 
 <body>
 
 
+    <div class="wrapper center">
 
+        <div class="results-display">
+            <h2 class="color-text" id="main-display">000</h2>
+        </div>
+
+        <div class="buttons-box">
+            <div class="button-row">
+                <button class="button" id="button-ce">CE</button>
+                <button class="button" id="button-c">C</button>
+                <button class="button" id="button-del">DEL</button>
+                <button class="button" id="button-divide">/</button>
+            </div>
+            <div class="button-row">
+                <button class="button" id="button-7">7</button>
+                <button class="button" id="button-8">8</button>
+                <button class="button" id="button-9">9</button>
+                <button class="button" id="button-multiply">X</button>
+            </div>
+            <div class="button-row">
+                <button class="button" id="button-4">4</button>
+                <button class="button" id="button-5">5</button>
+                <button class="button" id="button-6">6</button>
+                <button class="button" id="button-subtract">-</button>
+            </div>
+            <div class="button-row">
+                <button class="button" id="button-1">1</button>
+                <button class="button" id="button-2">2</button>
+                <button class="button" id="button-3">3</button>
+                <button class="button" id="button-add">+</button>
+            </div>
+            <div class="button-row">
+                <button class="button" id="button-pos-neg">+-</button>
+                <button class="button" id="button-0">0</button>
+                <button class="button" id="button-decimal">.</button>
+                <button class="button" id="button-equals">=</button>
+            </div>
+
+        </div>
+
+
+    </div>
 
 </body>
 <script>
-    // TODO: BEFORE WE GET TOO DEEP ADD '_' TO INTERNAL REFERENCES FOR CLARITY.
-
-    // FOR TESTING
-    let _a = 3;
-    let _b = 2;
+    // VARIABLES
+    let mainDisplay = document.getElementById('main-display');
 
     // OPERATIONS
     function operate(op, a, b) {
@@ -53,11 +114,28 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
         return a / b;
     }
 
+    function flipNegativeAndPosition(_numberToFlip) {
+        return _numberToFlip * -1;
+    }
+
+    function clearEverything() {
+        // CLEARS ALL MEMORY.
+    }
+
+    function clearCurrent() {
+        // CLEARS JUST THE CURRENT INTEGER.
+    }
+
     // // FOR TESTING
-    console.log(operate('+', _a, _b));
-    console.log(operate('-', _a, _b));
-    console.log(operate('*', _a, _b));
-    console.log(operate('/', _a, _b));
+
+    // let _a = 3;
+    // let _b = 2;
+
+
+    // console.log(operate('+', _a, _b));
+    // console.log(operate('-', _a, _b));
+    // console.log(operate('*', _a, _b));
+    // console.log(operate('/', _a, _b));
 
     // console.log('add ' + add(a, b));
     // console.log('subtract ' + sub(a, b));
