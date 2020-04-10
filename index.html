@@ -1,6 +1,22 @@
 <!-- 
 Create a basic HTML calculator with buttons for each digit, each of the above functions and an “Equals” key.
 
+// CHECK LIST
+
+1:  [ ] STYLE AND SHAPE BUTTONS
+2:  [ ] COLORS
+3:  [ ] MOBILE FORMATTING CHECK
+4:  [ ] HOOK-UP FUNCTION BUTTONS
+        - THESE WILL OUTPUT TO THE CONSOLE
+5:  [ ] HOOK-UP MAIN DISPLAY
+6:  [ ] HOOK-UP NUMBER BUTTONS
+7:  [ ] BUILD MEMORY FEATURES
+
+
+// ADDITIONAL FEATURES.
+
+1:  [ ] HAVE A LOG ON THE SIDE WITH THE PAST 16 OPERATIONS. - I WOULD ACTUALLY USE THIS.
+
 
 -->
 
@@ -82,6 +98,7 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
 </body>
 <script>
     // VARIABLES
+    let TESTING = false;
     let mainDisplay = document.getElementById('main-display');
 
     // OPERATIONS
@@ -126,21 +143,22 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
         // CLEARS JUST THE CURRENT INTEGER.
     }
 
-    // // FOR TESTING
 
-    // let _a = 3;
-    // let _b = 2;
+    if (TESTING) {
+        let _a = 3;
+        let _b = 2;
 
 
-    // console.log(operate('+', _a, _b));
-    // console.log(operate('-', _a, _b));
-    // console.log(operate('*', _a, _b));
-    // console.log(operate('/', _a, _b));
+        console.log(operate('+', _a, _b));
+        console.log(operate('-', _a, _b));
+        console.log(operate('*', _a, _b));
+        console.log(operate('/', _a, _b));
 
-    // console.log('add ' + add(a, b));
-    // console.log('subtract ' + sub(a, b));
-    // console.log('mult ' + mult(a, b));
-    // console.log('divide ' + divi(a, b));
+        console.log('add ' + add(a, b));
+        console.log('subtract ' + sub(a, b));
+        console.log('mult ' + mult(a, b));
+        console.log('divide ' + divi(a, b));
+    }
 </script>
 
 </html>
