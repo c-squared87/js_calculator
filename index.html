@@ -1,4 +1,115 @@
-<!-- 
+<html>
+
+<style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: normal;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        background: linear-gradient(to right, #00AADD, #AAADDD);
+    }
+
+    .calculator {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        min-height: 100vh;
+        grid-template-columns: repeat(4, 100px);
+        grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    }
+
+    .calculator>button {
+        cursor: pointer;
+        font-size: 2rem;
+        border: 1px solid white;
+        outline: none;
+        background-color: rgba(255, 255, 255, .75);
+    }
+
+    .calculator>button:hover {
+        background-color: rgba(255, 255, 255, .95);
+    }
+
+    .span-2 {
+        grid-column: span 2;
+    }
+
+    .results {
+        grid-column: 1/-1;
+        background-color: rgba(0, 0, 0, .75);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 10px;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+
+    .results .previous{
+        color: rgba(255, 255, 255, .75);
+        font-size: 1.5rem;
+    }
+
+
+    .results .current{
+        color: rgba(255, 255, 255, .95);
+        font-size: 2.5rem;
+    }
+
+</style>
+
+<body>
+    <div class="calculator">
+        <div class="results">
+            <div class="previous">420 * 69</div>
+            <div class="current">55378008</div>
+        </div>
+
+        <button class="button span-2" id="button-ce">CE</button>
+        <button class="button" id="button-del">DEL</button>
+        <button class="button" id="button-divide">/</button>
+        <button class="button" id="button-7">7</button>
+        <button class="button" id="button-8">8</button>
+        <button class="button" id="button-9">9</button>
+        <button class="button" id="button-multiply">X</button>
+        <button class="button" id="button-4">4</button>
+        <button class="button" id="button-5">5</button>
+        <button class="button" id="button-6">6</button>
+        <button class="button" id="button-subtract">-</button>
+        <button class="button" id="button-1">1</button>
+        <button class="button" id="button-2">2</button>
+        <button class="button" id="button-3">3</button>
+        <button class="button" id="button-add">+</button>
+        <button class="button" id="button-0">0</button>
+        <button class="button" id="button-decimal">.</button>
+        <button class="button span-2" id="button-equals">=</button>
+
+
+    </div>
+
+
+</body>
+
+<script>
+
+</script>
+
+</html>
+
+
+
+
+
+
+
+<!-- <!-- 
 Create a basic HTML calculator with buttons for each digit, each of the above functions and an “Equals” key.
 
 // CHECK LIST
@@ -9,26 +120,48 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
 4:  [ ] HOOK-UP FUNCTION BUTTONS
         - THESE WILL OUTPUT TO THE CONSOLE
 5:  [ ] HOOK-UP MAIN DISPLAY
+        - BUILD METHOD TO UPDATE THIS.
 6:  [ ] HOOK-UP NUMBER BUTTONS
 7:  [ ] BUILD MEMORY FEATURES
 
 
 // ADDITIONAL FEATURES.
 
-1:  [ ] HAVE A LOG ON THE SIDE WITH THE PAST 16 OPERATIONS. - I WOULD ACTUALLY USE THIS.
+1:  [ ] HAVE A LOG ON THE SIDE WITH THE PAST 16 OPERATIONS. - I WOULD ACTUALLY USE THIS FOR ACCOUNTING A LOT.
 
+// TODO-
 
+[ ] TWEAK BUTTON CSS
 -->
 
-<html>
-
+<!-- <html> -->
+<!-- 
 <style>
+    body {
+        background-color: darkslategray;
+    }
+
+    .button {
+        border: 1px outset blue;
+        background-color: lightBlue;
+        height: 50px;
+        width: 50px;
+        cursor: pointer;
+    }
+
     .button-row {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, 50px);
+    }
+
+    .buttons-box {
+        /* display: block; */
+        /* grid-template-rows: repeat(5, 1fr); */
+        /* margin: auto; */
     }
 
     .center {
+        display: block;
         margin: auto;
     }
 
@@ -44,11 +177,46 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
 
 
     .wrapper {
-        width: 40%;
+        /* display: grid; */
+        width: 250px;
         background-color: darkolivegreen;
+        /* grid-template-columns: repeat(1f, 1fr); */
     }
-</style>
+</style> -->
+<!-- 
+<style>
+    .wrapper {
+        border: 1px solid black;
+        /* margin: auto; */
+        width: 75%;
+    }
 
+    .results-display {
+        border: 1px solid red;
+        text-align: right;
+    }
+
+    .button {
+        border: 1px dotted green;
+        /* background-color: lightBlue; */
+        height: 50px;
+        width: 50px;
+        cursor: pointer;
+    }
+
+    .buttons-box {
+        /* display: block;
+        margin: auto; */
+        border: 1px solid blue;
+
+    }
+
+    .button-row {
+        display: grid;
+        grid-template-columns: repeat(4, 50px);
+    }
+</style> -->
+<!-- 
 <body>
 
 
@@ -58,7 +226,7 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
             <h2 class="color-text" id="main-display">000</h2>
         </div>
 
-        <div class="buttons-box">
+        <div class="buttons-box center ">
             <div class="button-row">
                 <button class="button" id="button-ce">CE</button>
                 <button class="button" id="button-c">C</button>
@@ -96,10 +264,13 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
     </div>
 
 </body>
-<script>
-    // VARIABLES
+<script> -->
+<!-- // VARIABLES
     let TESTING = false;
+
     let mainDisplay = document.getElementById('main-display');
+
+    const register = 0; // This holds the other number.
 
     // OPERATIONS
     function operate(op, a, b) {
@@ -145,9 +316,9 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
 
 
     if (TESTING) {
+
         let _a = 3;
         let _b = 2;
-
 
         console.log(operate('+', _a, _b));
         console.log(operate('-', _a, _b));
@@ -158,7 +329,7 @@ Create a basic HTML calculator with buttons for each digit, each of the above fu
         console.log('subtract ' + sub(a, b));
         console.log('mult ' + mult(a, b));
         console.log('divide ' + divi(a, b));
-    }
-</script>
+    } -->
+<!-- </script> -->
 
-</html>
+<!-- </html> -->
