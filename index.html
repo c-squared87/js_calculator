@@ -12,7 +12,9 @@
     body {
         padding: 0;
         margin: 0;
-        background: linear-gradient(to right, #00AADD, #AAADDD);
+        /* background: linear-gradient(to right, #00AADD, #AAADDD); */
+        background: rgb(237, 236, 255);
+        background: linear-gradient(90deg, rgba(237, 236, 255, 1) 0%, rgba(177, 177, 255, 1) 30%, rgba(233, 255, 255, 1) 100%);
     }
 
     .calculator {
@@ -71,7 +73,7 @@
             <div data-current class="current"></div>
         </div>
 
-        <button data-all-clear class="span-two">AC</button>
+        <button data-all-clear class="span-two">CLEAR</button>
         <button data-delete>DEL</button>
         <button data-operation>/</button>
         <button data-number>1</button>
@@ -97,6 +99,7 @@
 
 <script>
     class Calculator {
+
         constructor(previousDisplay, currentDisplay) {
             this.previousDisplay = previousDisplay;
             this.currentDisplay = currentDisplay;
@@ -108,18 +111,16 @@
             this.previousOperand = '';
             this.operation = undefined;
         }
+
         delete() {
             this.currentOperand = this.currentOperand.toString().slice(0, -1);
         }
+
         appendNumber(number) {
             if (number === '.' && this.currentOperand.includes('.')) {
                 return;
             }
             this.currentOperand = this.currentOperand.toString() + number.toString();
-        }
-
-        getDisplayNumber(number){
-            return number;
         }
 
         chooseOperation(operation) {
@@ -147,14 +148,26 @@
             List<Operation> operations;
 
             struct Operation
+
+            pub Operation(
+                int id, - how to assign this
+                float num1, - previous
+                float num2, - current
+                string operation){ - operand
+
+                };
+
             pub int ID;
             pub string Notes;
             float Number_1;
             float Number_2;
             string Operation;
+            float result;
+
             pub float ReturnOperand();
 
-            Then we can parse through it and show the work on multi-step problems.
+            Then we can parse through it and show the work on multi-step problems
+            in a display div to the side of the calulator body
             */
 
             let _computation = 0;
@@ -177,6 +190,10 @@
                     _computation = _prev * _curr;
                     break;
                 case '/':
+                    if (_curr == 0) {
+                        alert('stop that.');
+                        return;
+                    }
                     _computation = _prev / _curr;
                     break;
                 default:
@@ -237,6 +254,81 @@
     deleteButton.addEventListener('click', button => {
         calculator.delete();
         calculator.updateDisplay();
+    });
+
+    // KEYBOARD NUMBERS
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode == 48) {
+            calculator.appendNumber('0');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 49) {
+            calculator.appendNumber('1');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 50) {
+            calculator.appendNumber('2');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 51) {
+            calculator.appendNumber('3');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 52) {
+            calculator.appendNumber('4');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 53) {
+            calculator.appendNumber('5');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 54) {
+            calculator.appendNumber('6');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 55) {
+            calculator.appendNumber('7');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 56) {
+            calculator.appendNumber('8');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 57) {
+            calculator.appendNumber('9');
+            calculator.updateDisplay();
+        } else if (event.keyCode == 110) {
+            calculator.appendNumber('.');
+            calculator.updateDisplay();
+        }
+    });
+
+    // KEYBOARD OPERATIONS
+    document.addEventListener('keydown', e => {
+        if (e.keyCode == 107) {
+            calculator.chooseOperation('+');
+            calculator.updateDisplay();
+        } else if (e.keyCode == 109) {
+            calculator.chooseOperation('-');
+            calculator.updateDisplay();
+        } else if (e.keyCode == 106) {
+            calculator.chooseOperation('*');
+            calculator.updateDisplay();
+        } else if (e.keyCode == 111) {
+            calculator.chooseOperation('/');
+            calculator.updateDisplay();
+        }
+    });
+
+    // KEYBOARD CONTROL
+    document.addEventListener('keydown', e => {
+        if (e.keyCode == 13) {
+            calculator.compute();
+            calculator.updateDisplay();
+        }
+    });
+    document.addEventListener('keydown', e => {
+        if (e.keyCode == 12) {
+            calculator.clear();
+            calculator.updateDisplay();
+        }
+    });
+    document.addEventListener('keydown', e => {
+        if (e.keyCode == 8) {
+            calculator.delete();
+            calculator.updateDisplay();
+        }
     });
 </script>
 
