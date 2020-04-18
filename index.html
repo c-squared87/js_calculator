@@ -36,7 +36,7 @@
         background-color: rgba(255, 255, 255, .95);
     }
 
-    .span-2 {
+    .span-two {
         grid-column: span 2;
     }
 
@@ -52,45 +52,43 @@
         word-break: break-all;
     }
 
-    .results .previous{
+    .results .previous {
         color: rgba(255, 255, 255, .75);
         font-size: 1.5rem;
     }
 
-
-    .results .current{
+    .results .current {
         color: rgba(255, 255, 255, .95);
         font-size: 2.5rem;
     }
-
 </style>
 
 <body>
     <div class="calculator">
+
         <div class="results">
-            <div class="previous">420 * 69</div>
-            <div class="current">55378008</div>
+            <div data-previous class="previous"></div>
+            <div data-current class="current"></div>
         </div>
 
-        <button class="button span-2" id="button-ce">CE</button>
-        <button class="button" id="button-del">DEL</button>
-        <button class="button" id="button-divide">/</button>
-        <button class="button" id="button-7">7</button>
-        <button class="button" id="button-8">8</button>
-        <button class="button" id="button-9">9</button>
-        <button class="button" id="button-multiply">X</button>
-        <button class="button" id="button-4">4</button>
-        <button class="button" id="button-5">5</button>
-        <button class="button" id="button-6">6</button>
-        <button class="button" id="button-subtract">-</button>
-        <button class="button" id="button-1">1</button>
-        <button class="button" id="button-2">2</button>
-        <button class="button" id="button-3">3</button>
-        <button class="button" id="button-add">+</button>
-        <button class="button" id="button-0">0</button>
-        <button class="button" id="button-decimal">.</button>
-        <button class="button span-2" id="button-equals">=</button>
-
+        <button data-all-clear class="span-two">AC</button>
+        <button data-delete>DEL</button>
+        <button data-operation>/</button>
+        <button data-number>1</button>
+        <button data-number>2</button>
+        <button data-number>3</button>
+        <button data-operation>*</button>
+        <button data-number>4</button>
+        <button data-number>5</button>
+        <button data-number>6</button>
+        <button data-operation>+</button>
+        <button data-number>7</button>
+        <button data-number>8</button>
+        <button data-number>9</button>
+        <button data-operation>-</button>
+        <button data-number>.</button>
+        <button data-number>0</button>
+        <button data-equals class="span-two">=</button>
 
     </div>
 
@@ -98,7 +96,144 @@
 </body>
 
 <script>
+    class Calculator {
+        constructor(previousDisplay, currentDisplay) {
+            this.previousDisplay = previousDisplay;
+            this.currentDisplay = currentDisplay;
+            this.clear();
+        }
 
+        clear() {
+            this.currentOperand = '';
+            this.previousOperand = '';
+            this.operation = undefined;
+        }
+        delete() {
+            this.currentOperand = this.currentOperand.toString().slice(0, -1);
+        }
+        appendNumber(number) {
+            if (number === '.' && this.currentOperand.includes('.')) {
+                return;
+            }
+            this.currentOperand = this.currentOperand.toString() + number.toString();
+        }
+
+        chooseOperation(operation) {
+            if (this.currentOperand === '') {
+                return;
+            }
+            if (this.previousOperand !== '') {
+                this.compute();
+            }
+            this.operation = operation;
+            this.previousOperand = this.currentOperand;
+            this.currentOperand = '';
+        }
+
+        compute() {
+
+            /*
+            OKAY SO HERE IS WHERE IM GOING TO DO THE EXPANDING.
+
+            THE IDEA IS BASICALLY THE UNDO FUNCTION FROM THE COMMAND PATTERN
+
+            SORRY GOING TO PRETEND THIS IS C# FOR A SECOND
+
+            MANAGER HAS
+            List<Operation> operations;
+
+            struct Operation
+            pub int ID;
+            pub string Notes;
+            float Number_1;
+            float Number_2;
+            string Operation;
+            pub float ReturnOperand();
+
+            Then we can parse through it and show the work on multi-step problems.
+            */
+
+            let _computation = 0;
+
+            const _prev = parseFloat(this.previousOperand);
+            const _curr = parseFloat(this.currentOperand);
+
+            if (isNaN(_prev) || isNaN(_curr)) {
+                return;
+            }
+
+            switch (this.operation) {
+                case '+':
+                    _computation = _prev + _curr;
+                    break;
+                case '-':
+                    _computation = _prev - _curr;
+                    break;
+                case '*':
+                    _computation = _prev * _curr;
+                    break;
+                case '/':
+                    _computation = _prev / _curr;
+                    break;
+                default:
+                    return;
+            }
+
+            this.clear();
+            this.currentOperand = _computation;
+        }
+
+        updateDisplay() {
+            if (this.operation === undefined) {
+                this.operation = '';
+            }
+            this.currentDisplay.innerText = this.currentOperand;
+            this.previousDisplay.innerText = this.previousOperand + " " + this.operation;
+
+
+        }
+    }
+
+    const numberButtons = document.querySelectorAll('[data-number]');
+    const operationButtons = document.querySelectorAll('[data-operation]');
+
+    const allclearButton = document.querySelector('[data-all-clear]');
+    const deleteButton = document.querySelector('[data-delete]');
+    const equalButton = document.querySelector('[data-equals]');
+
+    const previousDisplay = document.querySelector('[data-previous]');
+    const currentDisplay = document.querySelector('[data-current]');
+
+    const calculator = new Calculator(previousDisplay, currentDisplay);
+
+    numberButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            calculator.appendNumber(button.innerText);
+            calculator.updateDisplay();
+        });
+    });
+
+    operationButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            calculator.chooseOperation(button.innerText);
+            calculator.updateDisplay();
+        });
+    });
+
+    allclearButton.addEventListener('click', button => {
+        calculator.clear();
+        calculator.updateDisplay();
+    });
+
+    equalButton.addEventListener('click', button => {
+        calculator.compute();
+        calculator.updateDisplay();
+    });
+
+    deleteButton.addEventListener('click', button => {
+        calculator.delete();
+        calculator.updateDisplay();
+    });
 </script>
 
 </html>
