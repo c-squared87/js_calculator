@@ -97,6 +97,63 @@
 </body>
 
 <script>
+    /*
+ struct Operation
+
+            pub Operation(
+                int id, - how to assign this
+                float num1, - previous
+                float num2, - current
+                string operation){ - operand
+
+                };
+
+            pub int ID;
+            pub string Notes;
+            float Number_1;
+            float Number_2;
+            string Operation;
+            float result;
+
+            pub float ReturnOperand();
+
+
+*/
+
+    class Operation {
+
+        constructor(numA, numB, operation, idNumber) {
+            this.numA = numA;
+            this.numB = numB;
+            this.operation = operation;
+            this.iD = idNumber;
+        }
+
+        returnOperand() {
+            switch (this.operation) {
+                case '+':
+                    return this.numA + this.numB;
+                case '-':
+                    return this.numA - this.numB;
+                case '*':
+                    return this.numA * this.numB;
+                case '/':
+                    if (this.numB == 0) {
+                        alert('stop that.');
+                        return;
+                    }
+                    return this.numA / this.numB;
+                default:
+                    return 0;
+            }
+        }
+
+        returnProcessString() {
+            return this.numA.toString() + ' ' + this.operation + ' ' + this.numB.toString() + ' ' + this
+                .returnOperand().toString();
+        }
+    }
+
     class Calculator {
 
         constructor(previousDisplay, currentDisplay) {
@@ -136,8 +193,6 @@
 
         compute() {
 
-            let _computation = 0;
-
             const _prev = parseFloat(this.previousOperand);
             const _curr = parseFloat(this.currentOperand);
 
@@ -145,29 +200,11 @@
                 return;
             }
 
-            switch (this.operation) {
-                case '+':
-                    _computation = _prev + _curr;
-                    break;
-                case '-':
-                    _computation = _prev - _curr;
-                    break;
-                case '*':
-                    _computation = _prev * _curr;
-                    break;
-                case '/':
-                    if (_curr == 0) {
-                        alert('stop that.');
-                        return;
-                    }
-                    _computation = _prev / _curr;
-                    break;
-                default:
-                    return;
-            }
+            var comp = new Operation(_prev, _curr, this.operation, 1);
 
             this.clear();
-            this.currentOperand = _computation;
+
+            this.currentOperand = comp.returnOperand();
         }
 
         updateDisplay() {
