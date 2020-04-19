@@ -31,16 +31,26 @@
     }
 
     .history-display {
-        justify-content: center;
+        justify-content: left;
         align-content: center;
         display: grid;
-        grid-template-rows: repeat(8, 1fr);
-        height: 75%;
     }
 
     .history-item {
-        border: 1px solid red;
-        font-size: 1.5rem;
+        background-color: rgba(0, 0, 0, .75);
+        padding-left: 4px;
+        padding-right: 4px;
+        padding: 2px;
+        color: rgba(255, 255, 255, .95);
+        font-size: 2.5rem;
+    }
+
+    .history-display>button {
+        cursor: pointer;
+        font-size: 2rem;
+        border: 1px solid white;
+        outline: none;
+        background-color: rgba(255, 255, 255, .75);
     }
 
     .calculator>button {
@@ -52,6 +62,10 @@
     }
 
     .calculator>button:hover {
+        background-color: rgba(255, 255, 255, .95);
+    }
+
+    .history-display>button:hover {
         background-color: rgba(255, 255, 255, .95);
     }
 
@@ -124,6 +138,7 @@
             <div data-history-item class="history-item">1: 2 1 + 1</div>
             <div data-history-item class="history-item">1: 2 1 + 1</div>
             <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <button data-clear-history>CLEAR</button>
         </div>
     </div>
 
@@ -133,10 +148,16 @@
     class Operation {
 
         constructor(numA, numB, operation, idNumber) {
+
             this.numA = numA;
             this.numB = numB;
             this.operation = operation;
             this.iD = idNumber;
+
+            operations_Array.push(this);
+            if (operations_Array.length > 8) {
+                operations_Array.shift();
+            }
         }
 
         returnOperand() {
@@ -213,6 +234,9 @@
             }
 
             var comp = new Operation(_prev, _curr, this.operation, 1);
+            // operations_Array.push(comp);
+
+            this.updateHistory();
 
             this.clear();
 
@@ -225,14 +249,19 @@
             }
             this.currentDisplay.innerText = this.currentOperand;
             this.previousDisplay.innerText = this.previousOperand + " " + this.operation;
-
-            this.updateHistory();
         }
 
         updateHistory() {
-            for (var i = 0; i < historyDisplayItems.length; i++) {
-                historyDisplayItems[i].innerText = i.toString();
+            // TODO: CONSIDER MOVING THIS TO UPDATE DISPLAY METHOD.
+            for (var i = 0; i < operations_Array.length; i++) {
+                // console.log(operations_Array[i].returnProcessString());
+                historyDisplayItems[i].innerText = operations_Array[i].returnProcessString();
             }
+        }
+
+        clearAllHistory() {
+            operations_Array.length = 0;
+            updateHistory();
         }
     }
 
@@ -240,6 +269,7 @@
     const operationButtons = document.querySelectorAll('[data-operation]');
 
     const historyDisplayItems = document.querySelectorAll('[data-history-item]');
+    const historyClearButton = document.querySelector('[data-clear-history]');
 
     const allclearButton = document.querySelector('[data-all-clear]');
     const deleteButton = document.querySelector('[data-delete]');
@@ -248,7 +278,7 @@
     const previousDisplay = document.querySelector('[data-previous]');
     const currentDisplay = document.querySelector('[data-current]');
 
-    // const operations_Array = 
+    var operations_Array = [];
 
     const calculator = new Calculator(previousDisplay, currentDisplay);
 
@@ -278,6 +308,12 @@
 
     deleteButton.addEventListener('click', button => {
         calculator.delete();
+        calculator.updateDisplay();
+    });
+
+    historyClearButton.addEventListener('click', button => {
+        calculator.clearAllHistory();
+        calculator.updateHistory();
         calculator.updateDisplay();
     });
 
