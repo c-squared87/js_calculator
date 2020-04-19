@@ -16,6 +16,11 @@
         background: linear-gradient(90deg, rgba(237, 236, 255, 1) 0%, rgba(177, 177, 255, 1) 30%, rgba(233, 255, 255, 1) 100%);
     }
 
+    .app {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .calculator {
         display: grid;
         justify-content: center;
@@ -23,6 +28,19 @@
         min-height: 100vh;
         grid-template-columns: repeat(4, 100px);
         grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    }
+
+    .history-display {
+        justify-content: center;
+        align-content: center;
+        display: grid;
+        grid-template-rows: repeat(8, 1fr);
+        height: 75%;
+    }
+
+    .history-item {
+        border: 1px solid red;
+        font-size: 1.5rem;
     }
 
     .calculator>button {
@@ -62,64 +80,56 @@
         color: rgba(255, 255, 255, .95);
         font-size: 2.5rem;
     }
+
+
+    ul {
+        list-style: none;
+    }
 </style>
 
 <body>
-    <div class="calculator">
+    <div class="app">
 
-        <div class="results">
-            <div data-previous class="previous"></div>
-            <div data-current class="current"></div>
+        <div class="calculator">
+            <div class="results">
+                <div data-previous class="previous"></div>
+                <div data-current class="current"></div>
+            </div>
+            <button data-all-clear class="span-two">CLEAR</button>
+            <button data-delete>DEL</button>
+            <button data-operation>/</button>
+            <button data-number>1</button>
+            <button data-number>2</button>
+            <button data-number>3</button>
+            <button data-operation>*</button>
+            <button data-number>4</button>
+            <button data-number>5</button>
+            <button data-number>6</button>
+            <button data-operation>+</button>
+            <button data-number>7</button>
+            <button data-number>8</button>
+            <button data-number>9</button>
+            <button data-operation>-</button>
+            <button data-number>.</button>
+            <button data-number>0</button>
+            <button data-equals class="span-two">=</button>
         </div>
 
-        <button data-all-clear class="span-two">CLEAR</button>
-        <button data-delete>DEL</button>
-        <button data-operation>/</button>
-        <button data-number>1</button>
-        <button data-number>2</button>
-        <button data-number>3</button>
-        <button data-operation>*</button>
-        <button data-number>4</button>
-        <button data-number>5</button>
-        <button data-number>6</button>
-        <button data-operation>+</button>
-        <button data-number>7</button>
-        <button data-number>8</button>
-        <button data-number>9</button>
-        <button data-operation>-</button>
-        <button data-number>.</button>
-        <button data-number>0</button>
-        <button data-equals class="span-two">=</button>
-
+        <div data-history-display class="history-display">
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+            <div data-history-item class="history-item">1: 2 1 + 1</div>
+        </div>
     </div>
-
 
 </body>
 
 <script>
-    /*
- struct Operation
-
-            pub Operation(
-                int id, - how to assign this
-                float num1, - previous
-                float num2, - current
-                string operation){ - operand
-
-                };
-
-            pub int ID;
-            pub string Notes;
-            float Number_1;
-            float Number_2;
-            string Operation;
-            float result;
-
-            pub float ReturnOperand();
-
-
-*/
-
     class Operation {
 
         constructor(numA, numB, operation, idNumber) {
@@ -155,6 +165,8 @@
     }
 
     class Calculator {
+
+        // TODO: REWORK THIS TO HAVE A CLEAR LINE FUNCTION, NOT JUST THE ALL CLEAR.
 
         constructor(previousDisplay, currentDisplay) {
             this.previousDisplay = previousDisplay;
@@ -214,12 +226,20 @@
             this.currentDisplay.innerText = this.currentOperand;
             this.previousDisplay.innerText = this.previousOperand + " " + this.operation;
 
+            this.updateHistory();
+        }
 
+        updateHistory() {
+            for (var i = 0; i < historyDisplayItems.length; i++) {
+                historyDisplayItems[i].innerText = i.toString();
+            }
         }
     }
 
     const numberButtons = document.querySelectorAll('[data-number]');
     const operationButtons = document.querySelectorAll('[data-operation]');
+
+    const historyDisplayItems = document.querySelectorAll('[data-history-item]');
 
     const allclearButton = document.querySelector('[data-all-clear]');
     const deleteButton = document.querySelector('[data-delete]');
@@ -227,6 +247,8 @@
 
     const previousDisplay = document.querySelector('[data-previous]');
     const currentDisplay = document.querySelector('[data-current]');
+
+    // const operations_Array = 
 
     const calculator = new Calculator(previousDisplay, currentDisplay);
 
