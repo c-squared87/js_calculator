@@ -1,0 +1,98 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: rgb(237, 236, 255);
+    background: linear-gradient(90deg, rgba(237, 236, 255, 1) 0%, rgba(177, 177, 255, 1) 30%, rgba(233, 255, 255, 1) 100%);
+}
+
+.app {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.calculator {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+}
+
+.history-display {
+    justify-content: left;
+    align-content: center;
+    display: grid;
+}
+
+.history-item {
+    background-color: rgba(0, 0, 0, .75);
+    padding-left: 4px;
+    padding-right: 4px;
+    padding: 2px;
+    color: rgba(255, 255, 255, .95);
+    font-size: 2.5rem;
+}
+
+.history-display>button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+.calculator>button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+.calculator>button:hover {
+    background-color: rgba(255, 255, 255, .95);
+}
+
+.history-display>button:hover {
+    background-color: rgba(255, 255, 255, .95);
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.results {
+    grid-column: 1/-1;
+    background-color: rgba(0, 0, 0, .75);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.results .previous {
+    color: rgba(255, 255, 255, .75);
+    font-size: 1.5rem;
+}
+
+.results .current {
+    color: rgba(255, 255, 255, .95);
+    font-size: 2.5rem;
+}
+
+
+ul {
+    list-style: none;
+}
